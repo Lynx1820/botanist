@@ -9,10 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 public class LoginDataBase {
 
     private final Context context;
-    public  LoginDataBase(Context _context)
+    public  LoginDataBase(Context logInContext)
     {
-        context = _context;
-       // dbHelper = new DataBaseHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
+        context = logInContext;
+
     }
 
 }
