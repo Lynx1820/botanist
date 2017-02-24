@@ -14,43 +14,46 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/cat"
-        android:id="@+id/image" />
+        android:layout_width="wrap_content"
+        android:layout_height="405dp"
+        app:srcCompat="@drawable/plant"
+        android:id="@+id/image"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <Button
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/pun_pending"
             android:id="@+id/plantButton"
             android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:text="My Plants"
-            android:onClick="onPlantButtonClick (MenuActivity)" />
+            android:background="@android:color/transparent"
+            android:onClick="onPlantButtonClick" />
 
-        <Button
-            android:text="about"
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/question_mark"
             android:id="@+id/aboutButton"
             android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:onClick="onAboutButtonClick (MenuActivity)" />
+            android:background="@android:color/transparent"
+            android:onClick="onAboutButtonClick" />
 
-        <Button
-            android:text="Logout"
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/door"
             android:id="@+id/logoutButton"
             android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:onClick="onLogoutButtonClick (MenuActivity)" />
+            android:background="@android:color/transparent"
+            android:onClick="onLogoutButtonClick" />
+
     </LinearLayout>
 
 </LinearLayout>
