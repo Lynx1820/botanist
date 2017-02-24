@@ -29,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(singUpIntent);
             }
         });
+        logInButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent menuIntent =new Intent(getApplicationContext(),MenuActivity.class);
+                startActivity(menuIntent);
+            }
+        });
     }
 
     }

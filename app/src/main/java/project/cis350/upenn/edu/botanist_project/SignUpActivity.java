@@ -16,9 +16,12 @@ public class SignUpActivity extends AppCompatActivity {
     EditText editUserName,editPassword,editConfirmPassword;
     Button createAccount;
     ActionBar actionBar;
+    LoginDataBase loginDataBase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loginDataBase=new LoginDataBase(this);
+        loginDataBase =loginDataBase.open();
         setContentView(R.layout.sign_up);
         editUserName=(EditText)findViewById(R.id.editUserName);
         editPassword=(EditText)findViewById(R.id.editPassword);
