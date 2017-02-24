@@ -32,7 +32,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             style="@style/Widget.AppCompat.Button.Borderless.Colored"
             android:text="My Plants"
-            android:onClick="onPlantButtonClick (MenuActivity)" />
+            android:onClick="onPlantButtonClick" />
 
         <Button
             android:text="about"
@@ -41,7 +41,7 @@
             android:id="@+id/aboutButton"
             android:layout_weight="1"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:onClick="onAboutButtonClick (MenuActivity)" />
+            android:onClick="onAboutButtonClick" />
 
         <Button
             android:text="Logout"
@@ -50,7 +50,7 @@
             android:id="@+id/logoutButton"
             android:layout_weight="1"
             style="@style/Widget.AppCompat.Button.Borderless"
-            android:onClick="onLogoutButtonClick (MenuActivity)" />
+            android:onClick="onLogoutButtonClick" />
     </LinearLayout>
 
 </LinearLayout>

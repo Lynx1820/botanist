@@ -7,6 +7,8 @@ import android.view.View;
 
 public class MenuActivity extends AppCompatActivity {
     public static final int PlantButtonClickActivity_ID = 1;
+    public static final int AboutButtonClickActivity_ID = 2;
+    public static final int LogoutButtonClickActivity_ID = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +23,12 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void onAboutButtonClick(View v) {
-        // whatever is about activity
+        Intent i = new Intent(this, AboutActivity.class);
+        startActivityForResult(i, AboutButtonClickActivity_ID);
     }
 
     public void onLogoutButtonClick(View v) {
-        // logout functionality
+        Intent i = new Intent(this, MainActivity.class);
+        startActivityForResult(i, LogoutButtonClickActivity_ID);
     }
 }
