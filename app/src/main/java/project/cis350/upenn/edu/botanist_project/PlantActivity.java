@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 
 public class PlantActivity extends AppCompatActivity {
 
@@ -16,15 +18,6 @@ public class PlantActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         Button addPlant = (Button) findViewById(R.id.add_plant);
         // set action for when add_plant button is pressed
         addPlant.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +27,11 @@ public class PlantActivity extends AppCompatActivity {
                 // this is a temporary message
                 Snackbar.make(view, "Adding new plant!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                GridLayout plant_grid = (GridLayout) findViewById(R.id.plant_grid);
+                ImageView image = new ImageView(getApplicationContext());
+                image.setImageResource(R.drawable.plant);
+                plant_grid.addView(image);
             }
         });
     }
