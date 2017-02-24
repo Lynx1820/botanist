@@ -30,7 +30,7 @@ public class PlantActivity extends AppCompatActivity {
 
                 GridLayout plant_grid = (GridLayout) findViewById(R.id.plant_grid);
                 ImageView image = new ImageView(getApplicationContext());
-                image.setImageResource(R.drawable.plant);
+                image.setImageResource(R.drawable.pun_pending);
                 plant_grid.addView(image);
             }
         });
