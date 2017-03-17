@@ -3,6 +3,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+
 /**
  * Created by lynx313 on 2/24/17.
  */
@@ -15,7 +16,6 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     public static final String COLUMN_ID =  "userid";
     public static final String COLUMN_USERNAME =  "username";
     public static final String COLUMN_PASSWORD =  "password";
-  //  public static final String COLUMN_MOBILE =  "mobile";
     private static final String CREATE_TABLE_QUERY =
           "CREATE TABLE " + TABLE_NAME + " (" +
                   COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

@@ -9,7 +9,7 @@ public class MenuActivity extends AppCompatActivity {
     public static final int PlantButtonClickActivity_ID = 1;
     public static final int AboutButtonClickActivity_ID = 2;
     public static final int LogoutButtonClickActivity_ID = 3;
-
+    // TODO: Create the plant object from database info?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

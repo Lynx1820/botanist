@@ -3,6 +3,7 @@ package project.cis350.upenn.edu.botanist_project;
 /**
  * Created by lynx313 on 2/14/17.
  */
+/*I might implement this later for better modularity*/
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,13 +24,12 @@ public class LoginDataBase {
         ContentValues newVal = new ContentValues();
         db.insert("LOGIN", null, newVal);
     }
-    public int deleteUser(String username){
-       // String where=
+    public int deleteUser(String username) {
+        // String where=
         return 1;
     }
     public LoginDataBase open(){
         // Gets the data repository in write mode
-
         db = dbHelper.getWritableDatabase();
         return this;
     }
