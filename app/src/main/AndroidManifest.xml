@@ -29,20 +29,21 @@
         </activity>
         <activity
             android:name=".PlantActivity"
-            android:label="@string/title_activity_plant"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:label="PlantActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MenuActivity"
             android:label="Main Menu"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".InfoActivity"
+            android:label="InfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PlantInfoActivity"></activity>
     </application>
 
 </manifest>

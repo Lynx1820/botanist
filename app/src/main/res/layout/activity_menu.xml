@@ -39,6 +39,15 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:srcCompat="@drawable/birb"
+            android:id="@+id/infoButton"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:onClick="onInfoButtonClick" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:srcCompat="@drawable/question_mark"
             android:id="@+id/aboutButton"
             android:layout_weight="1"

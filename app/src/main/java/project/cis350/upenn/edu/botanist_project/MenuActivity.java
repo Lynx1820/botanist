@@ -9,6 +9,7 @@ public class MenuActivity extends AppCompatActivity {
     public static final int PlantButtonClickActivity_ID = 1;
     public static final int AboutButtonClickActivity_ID = 2;
     public static final int LogoutButtonClickActivity_ID = 3;
+    public static final int InfoButtonClickActivity_ID = 4;
     // TODO: Create the plant object from database info?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,11 @@ public class MenuActivity extends AppCompatActivity {
     public void onPlantButtonClick(View v) {
         Intent i = new Intent(this, PlantActivity.class);
         startActivityForResult(i, PlantButtonClickActivity_ID);
+    }
+
+    public void onInfoButtonClick(View v) {
+        Intent i = new Intent(this, InfoActivity.class);
+        startActivityForResult(i, InfoButtonClickActivity_ID);
     }
 
     public void onAboutButtonClick(View v) {
