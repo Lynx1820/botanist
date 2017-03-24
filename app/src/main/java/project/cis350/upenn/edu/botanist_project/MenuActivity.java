@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 public class MenuActivity extends AppCompatActivity {
+    public static String owner;
     public static final int PlantButtonClickActivity_ID = 1;
     public static final int AboutButtonClickActivity_ID = 2;
     public static final int LogoutButtonClickActivity_ID = 3;
@@ -15,6 +17,10 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        String myText = "Hello " + owner + "!";
+        TextView myTextView= (TextView) findViewById(R.id.myTextView);
+        myTextView.setText(myText);
+
     }
 
     // creates a plant activity
