@@ -12,7 +12,12 @@
     tools:context="project.cis350.upenn.edu.botanist_project.MenuActivity"
     android:weightSum="1"
     android:layout_height="match_parent">
-
+    <TextView
+        android:id="@+id/myTextView"
+        android:scaleType="fitCenter"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="405dp"
@@ -21,12 +26,10 @@
         android:scaleType="fitCenter"
         android:adjustViewBounds="false"
         android:cropToPadding="false" />
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
