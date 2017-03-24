@@ -10,4 +10,15 @@
     \n\n
     This application was created for a CIS 350 project by John Bartlett, Keren De Jesus,
     Christine Fu, and Max Ying.</string>
+    <string name="title_activity_add_plant">Enter Plant Info</string>
+
+    <!-- Strings related to plant adding -->
+    <string name="prompt_plant_name">Plant Name</string>
+    <string name="prompt_type">Plant Type</string>
+    <string name="action_add_plant">Add Plant</string>
+    <string name="action_add_short">Add</string>
+    <string name="error_name_used">You already have a plant with this name</string>
+    <string name="error_invalid_name">Name must be at least 3 characters</string>
+    <string name="error_invalid_type">Invalid plant type</string>
+    <string name="error_field_required">This field is required</string>
 </resources>

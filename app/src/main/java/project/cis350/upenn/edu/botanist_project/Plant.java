@@ -14,12 +14,14 @@ import java.util.Date;
 public class Plant {
     private Date created;
     private String name;
+    private String type;
     private ArrayList<Bitmap> photos;
     private boolean hasPicture;
 
-    public Plant(Date created, String name) {
+    public Plant(Date created, String name, String type) {
         this.created = created;
         this.name = name;
+        this.type = type;
         photos = new ArrayList<>();
         hasPicture = false;
     }
@@ -30,6 +32,8 @@ public class Plant {
             hasPicture = true;
         }
     }
+
+    public String getType() {return type;}
 
     public Date getCreated() {
         return created;

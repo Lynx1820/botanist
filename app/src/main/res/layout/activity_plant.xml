@@ -50,8 +50,9 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/plant_grid">
+        android:layout_height="506dp"
+        android:id="@+id/plant_grid"
+        android:layout_gravity="bottom">
 
     </GridLayout>
 
