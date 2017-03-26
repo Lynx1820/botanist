@@ -20,7 +20,8 @@ public class MenuActivity extends AppCompatActivity {
         String myText = "Hello " + owner + "!";
         TextView myTextView= (TextView) findViewById(R.id.myTextView);
         myTextView.setText(myText);
-
+        myTextView= (TextView) findViewById(R.id.info_text);
+        myTextView.setText("No remainders yet!");
     }
 
     // creates a plant activity

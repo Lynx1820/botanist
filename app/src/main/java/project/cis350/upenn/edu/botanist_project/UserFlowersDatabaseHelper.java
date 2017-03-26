@@ -16,12 +16,12 @@ public class UserFlowersDatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_NAME = "userFlowers";
-    public static final String COLUMN_ID =  "userid";
-    public static final String COLUMN_FLOWERID ="flowerIDs";
+    public static final String COLUMN_USERNAME =  "username";
+    public static final String COLUMN_FLOWERID ="flowerID";
     public static final String COLUMN_VAR =  "daysWatered";
     private static final String CREATE_TABLE_QUERY =
             "CREATE TABLE " + TABLE_NAME + " (" +
-                    COLUMN_ID + " INT" +
+                    COLUMN_USERNAME + " TEXT," +
                     COLUMN_FLOWERID + " INT, " +
                     COLUMN_VAR + " INT" +
                     ")";

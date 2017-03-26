@@ -12,19 +12,24 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class PlantActivity extends AppCompatActivity {
     public static final int ADDPLANT_ID = 1;
-    private static ArrayList<Plant> currentPlants;
-
+    private static List<Plant> currentPlants;
+    FetchPlantData plantAdapter;
+    LoginDataBase loginAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        currentPlants = new ArrayList<Plant>();
+        loginAdapter = new LoginDataBase(this);
+        loginAdapter = loginAdapter.open();
+        plantAdapter = new FetchPlantData(this);
+        plantAdapter = plantAdapter.open();
+        addUsersPlants();
         displayCurrentPlants();
 
         Button addPlant = (Button) findViewById(R.id.add_plant);
@@ -36,7 +41,9 @@ public class PlantActivity extends AppCompatActivity {
             }
         });
     }
-
+    protected void addUsersPlants(){
+        currentPlants = plantAdapter.getPlants(MenuActivity.owner);
+    }
     protected void displayCurrentPlants() {
         GridLayout plant_grid = (GridLayout) findViewById(R.id.plant_grid);
         for (int i = 0; i < currentPlants.size(); i++) {
@@ -63,8 +70,8 @@ public class PlantActivity extends AppCompatActivity {
                 String type = data.getStringExtra("plantType");
 
                 Plant p = new Plant(new Date(), name, type);
+                plantAdapter.insertEntry(MenuActivity.owner,1,0);
                 currentPlants.add(p);
-
                 if (result) {
                     // this is a temporary message
                     View v = findViewById(android.R.id.content).getRootView();

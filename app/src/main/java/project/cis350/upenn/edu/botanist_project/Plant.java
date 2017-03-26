@@ -17,7 +17,7 @@ public class Plant {
     private String type;
     private ArrayList<Bitmap> photos;
     private boolean hasPicture;
-
+    private int flowerID; //temporary var... eventually should be name
     public Plant(Date created, String name, String type) {
         this.created = created;
         this.name = name;
@@ -25,7 +25,11 @@ public class Plant {
         photos = new ArrayList<>();
         hasPicture = false;
     }
-
+    //just temporary...we can talk about what a plant object needs in the future.
+    // Still need to integrate the plant database someother time...
+    public Plant(int flowerID){
+        this.flowerID = flowerID;
+    }
     public void addPhoto(Bitmap photo) {
         photos.add(photo);
         if (!hasPicture) {

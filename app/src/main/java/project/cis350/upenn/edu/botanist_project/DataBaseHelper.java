@@ -13,7 +13,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     private static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_NAME = "profile";
-    public static final String COLUMN_ID =  "userid";
+    public static final String COLUMN_ID =  "userID";
     public static final String COLUMN_USERNAME =  "username";
     public static final String COLUMN_PASSWORD =  "password";
     private static final String CREATE_TABLE_QUERY =
@@ -22,8 +22,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
                   COLUMN_USERNAME + " TEXT, " +
                   COLUMN_PASSWORD + " TEXT " +
                   ")";
-    public DataBaseHelper(Context context)
-    {
+    public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
     @Override
