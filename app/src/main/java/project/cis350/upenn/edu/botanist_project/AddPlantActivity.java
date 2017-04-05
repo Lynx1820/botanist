@@ -102,6 +102,7 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
 
         boolean cancel = false;
         View focusView = null;
+        View addokafocusView = null;
 
         // Check if the User entered a name.
         if (TextUtils.isEmpty(name)) {

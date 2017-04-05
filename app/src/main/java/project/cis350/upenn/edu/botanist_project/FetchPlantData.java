@@ -16,16 +16,19 @@ import java.util.List;
 
 public class FetchPlantData {
     public SQLiteDatabase db;
+    public SQLiteDatabase fl;
     private final Context context;
     SQLiteOpenHelper openHelper;
     private UserFlowersDatabaseHelper dbHelper;
-
+    private FlowerDatabaseHelper fHelper;
     public  FetchPlantData(Context logInContext) {
         context = logInContext;
+        fHelper = new FlowerDatabaseHelper(context);
         dbHelper = new UserFlowersDatabaseHelper(context);
     }
     public FetchPlantData open() {
         db = dbHelper.getWritableDatabase();
+        fl = fHelper.getWritableDatabase(); //need writeable
         return this;
     }
     public void close() {
@@ -59,6 +62,7 @@ public class FetchPlantData {
         try {
             while (cursor.moveToNext()) {
                 int flowerID =  cursor.getInt(cursor.getColumnIndex("flowerID"));
+                //add info??
                 Plant curr = new Plant(flowerID);
                 plants.add(curr);
             }

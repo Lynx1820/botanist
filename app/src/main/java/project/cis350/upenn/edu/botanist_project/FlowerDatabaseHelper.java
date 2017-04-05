@@ -15,7 +15,7 @@ public class FlowerDatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "flowers";
     public static final String COLUMN_FLOWERID =  "flowerID";
     public static final String COLUMN_NAME =  "flowerName";
-    public static final String COLUMN_TEMPERATURE=  "flowerName";
+    public static final String COLUMN_TEMPERATURE=  "flowerTemp";
     private static final String CREATE_TABLE_QUERY =
             "CREATE TABLE " + TABLE_NAME + " (" +
                     COLUMN_FLOWERID + " INT" +

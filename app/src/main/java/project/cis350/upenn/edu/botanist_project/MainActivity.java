@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 String password=editTextPassword.getText().toString();
                 cursor = db.rawQuery("SELECT *FROM "+ DataBaseHelper.TABLE_NAME+
                         " WHERE " + DataBaseHelper.COLUMN_USERNAME+"=? AND "+ DataBaseHelper.COLUMN_PASSWORD+"=?",new String[] {username,password});
-                System.out.println("dsa!!!" + cursor);
+              //  System.out.println("dsa!!!" + cursor);
                 if (cursor != null && cursor.getCount()>0){
                     MenuActivity.owner = username;
                     Intent menuIntent =new Intent(getApplicationContext(),MenuActivity.class);
