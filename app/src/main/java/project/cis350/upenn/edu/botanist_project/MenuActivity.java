@@ -43,5 +43,6 @@ public class MenuActivity extends AppCompatActivity {
     public void onLogoutButtonClick(View v) {
         Intent i = new Intent(this, MainActivity.class);
         startActivityForResult(i, LogoutButtonClickActivity_ID);
+        finish();
     }
 }
