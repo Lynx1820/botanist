@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * Most of the content in the About Page comes from the XML. This class is mostly wrapper.
+ *
+ * TODO: get rid of back toolbar? It's a bit redundant.
+ */
 public class AboutActivity extends AppCompatActivity {
     public static final int MenuActivity_ID = 1;
 

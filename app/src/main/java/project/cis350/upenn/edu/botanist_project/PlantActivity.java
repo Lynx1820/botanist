@@ -12,9 +12,13 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * The activity that allows a user to view their plants. Also connects to creation of new plants,
+ * AddPlantActivity, and more detailed information of *user* plants (not to be confused with
+ * PlantInfo, which is general).
+ */
 public class PlantActivity extends AppCompatActivity {
     public static final int ADDPLANT_ID = 1;
     private static List<Plant> currentPlants;

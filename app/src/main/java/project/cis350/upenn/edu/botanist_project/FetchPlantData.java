@@ -4,17 +4,18 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lynx313 on 3/24/17.
+ * Object representing communication with the backend User-Plant database. Contains
+ * methods allowing adding, updating, and removing plants. Given a username, we can
+ * also find all plants belonging to that user.
+ *
+ * Created by Keren, updated by Max
  */
-
 public class FetchPlantData {
     public SQLiteDatabase db;
     private final Context context;
