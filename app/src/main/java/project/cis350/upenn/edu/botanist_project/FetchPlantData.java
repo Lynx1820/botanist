@@ -5,13 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by lynx313 on 3/24/17.
+ * TODO: Change date created
  */
 
 public class FetchPlantData {
@@ -41,16 +44,20 @@ public class FetchPlantData {
         // Create a new map of values, where column names are the keys
 
         ContentValues newValues = new ContentValues();
-        // Assign values for each row.
+        ContentValues flValues = new ContentValues();
+        // Assign values for each row
         newValues.put("username", username);
         newValues.put("flowerID", plantId);
         newValues.put("daysWatered", daysWat);
+        flValues.put("flowerID",plantId);
+        //right now, I have the names this should be parsed or something
+        flValues.put("flowerName","my flower");
+        flValues.put("flowerType","rose");
         // Insert the row into your table
         db.insert("userFlowers", null, newValues);
-        ///Toast.makeText(context, "Reminder Is Successfully Saved", Toast.LENGTH_LONG).show();
+        fl.insert("flowers", null, flValues);
     }
-    public int deleteUser(String username) {
-        // String where=
+    public int deletePlant(String username) {
         return 1;
     }
     public List<Plant> getPlants(String username){
@@ -61,9 +68,18 @@ public class FetchPlantData {
         }
         try {
             while (cursor.moveToNext()) {
+                String flowerName;
+                String flowerType;
                 int flowerID =  cursor.getInt(cursor.getColumnIndex("flowerID"));
-                //add info??
-                Plant curr = new Plant(flowerID);
+                //gets the name of the plant
+                Cursor flowerCursor = fl.rawQuery("SELECT flowerID, flowerName FROM flowers " +
+                        "WHERE flowerID = ?", new String[] {Integer.toString(flowerID)});
+                flowerName = flowerCursor.getString(flowerCursor.getColumnIndex("flowerName"));
+                flowerCursor = fl.rawQuery("SELECT flowerID, flowerType FROM flowers " +
+                        "WHERE flowerID = ?", new String[] {Integer.toString(flowerID)});
+                flowerType = flowerCursor.getString(flowerCursor.getColumnIndex("flowerType"));
+                //The following gets the name of the plant
+                Plant curr = new Plant(new Date(),flowerName, flowerType);
                 plants.add(curr);
             }
         } finally {

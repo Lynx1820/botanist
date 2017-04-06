@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +52,7 @@ public class PlantActivity extends AppCompatActivity {
             ImageView image = new ImageView(getApplicationContext());
             image.setImageResource(R.drawable.pun_pending);
             plant_grid.addView(image, i);
+            Toast.makeText(PlantActivity.this, currentPlants.get(0).getName() , Toast.LENGTH_LONG).show();
         }
     }
 
