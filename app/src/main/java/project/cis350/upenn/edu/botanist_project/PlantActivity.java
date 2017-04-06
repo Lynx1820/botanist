@@ -2,16 +2,17 @@ package project.cis350.upenn.edu.botanist_project;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,24 +45,64 @@ public class PlantActivity extends AppCompatActivity {
     }
 
     protected void populateUsersPlants() {
-        //noinspection unchecked
-        currentPlants = (ArrayList<Plant>) getIntent().getSerializableExtra("plant_list");
+        currentPlants = FetchPlantData.getPlants(getApplicationContext(), MenuActivity.owner);
     }
 
     protected void displayCurrentPlants() {
         GridLayout plant_grid = (GridLayout) findViewById(R.id.plant_grid);
-        plant_grid.removeAllViews();
-        for (int i = 0; i < currentPlants.size(); i++) {
-            Plant p = currentPlants.get(i);
-            ImageView image = new ImageView(getApplicationContext());
+        plant_grid.removeAllViews(); // clear previous plants in case a new one has been created
+
+        // Dimensions of grid
+        int n = currentPlants.size();
+        int cols = 2;
+        int rows = (n + 1) / cols;
+        plant_grid.setColumnCount(cols);
+        plant_grid.setRowCount(rows);
+
+        for (int i = 0; i < n; i++) {
+            final Plant p = currentPlants.get(i);
+
+            // ImageView for the plant picture
+            ImageView image = new ImageView(this);
+            image.setId(i + 1);  // ids must be > 0, so we add 1
             image.setImageResource(R.drawable.pun_pending);
-            plant_grid.addView(image, i);
+
+            // TextView for the plant name
+            TextView name = new TextView(this);
+            name.setText(p.getName());
+            name.setGravity(Gravity.CENTER);
+
+            // Put ImageView on top of TextView
+            RelativeLayout stacked = new RelativeLayout(this);
+            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT);
+            params2.addRule(RelativeLayout.BELOW, image.getId());
+            stacked.addView(image);
+            stacked.addView(name, params2);
+            stacked.setGravity(Gravity.CENTER);  // TODO: figure out how to center text. this isn't working
+
+            // Each box in the grid is clickable to open up the plant details
+            stacked.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openPlantDetails(p);
+                }
+            });
+
+            plant_grid.addView(stacked);
         }
     }
 
     protected void openAddView() {
         Intent i = new Intent(this, AddPlantActivity.class);
         startActivityForResult(i, ADDPLANT_ID);
+    }
+
+    void openPlantDetails(Plant p) {
+        Intent i = new Intent(this, InteractiveUserPlantActivity.class);
+        i.putExtra("chosenPlant", p);
+        startActivity(i);
     }
 
     @Override
@@ -75,14 +116,10 @@ public class PlantActivity extends AppCompatActivity {
 
                 if (p != null) {
                     currentPlants.add(p); // add newly created plant to the grid
-                    Toast.makeText(this, "# of plants is" + currentPlants.size(), Toast.LENGTH_SHORT).show();
                 }
 
                 if (result) {
-                    // this is a temporary message
-                    View v = findViewById(android.R.id.content).getRootView();
-                    Snackbar.make(v, "Added plant successfully!", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    Toast.makeText(this, "Added plant successfully!", Toast.LENGTH_SHORT).show();
                 }
             }
         }

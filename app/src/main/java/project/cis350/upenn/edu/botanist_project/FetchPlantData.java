@@ -13,17 +13,17 @@ import java.util.List;
  * Object representing communication with the backend User-Plant database. Contains
  * methods allowing adding, updating, and removing plants. Given a username, we can
  * also find all plants belonging to that user.
- *
+ * <p>
  * Created by Keren, updated by Max
  */
 public class FetchPlantData {
     public SQLiteDatabase db;
     private final Context context;
-    private UserPlantsDB userPlants;
+    private UserPlantsDBHelper userPlants;
 
     public FetchPlantData(Context logInContext) {
         context = logInContext;
-        userPlants = new UserPlantsDB(context);
+        userPlants = new UserPlantsDBHelper(context);
     }
 
     public FetchPlantData open() {
@@ -40,20 +40,58 @@ public class FetchPlantData {
     }
 
     public boolean insertEntry(String username, Plant p) {
-        ContentValues newValues = new ContentValues();
 
-        newValues.put(UserPlantsDB.COL_USERNAME, username);
         byte[] serialPlant = Plant.serializePlant(p);
 
         // serialization may fail, in which case we do nothing
         if (serialPlant == null) {
-            Toast.makeText(context, "Tried to insert plant but serial was null", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Tried to insert plant but serialization failed", Toast.LENGTH_LONG).show();
             return false;
         } else {
-            newValues.put(UserPlantsDB.COL_PLANT, Plant.serializePlant(p));
-            db.insert(UserPlantsDB.TABLE_NAME, null, newValues);
+            ContentValues newValues = new ContentValues();
+            newValues.put(UserPlantsDBHelper.COL_USERNAME, username);
+            newValues.put(UserPlantsDBHelper.COL_PLANT_NAME, p.getName());
+            newValues.put(UserPlantsDBHelper.COL_PLANT, serialPlant);
+            db.insert(UserPlantsDBHelper.TABLE_NAME, null, newValues);
             return true;
         }
+    }
+
+    /**
+     * This method is called after the plant is watered. We remove the old plant data and replace
+     * it with the updated, watered version.
+     *
+     * @param username username of the app user
+     * @param p        Plant object that has just been watered
+     */
+    public void updateEntry(String username, Plant p) {
+
+        byte[] serialPlant = Plant.serializePlant(p);
+
+        // serialization may fail, in which case we do nothing
+        if (serialPlant == null) {
+            Toast.makeText(context, "Tried to apply update to plant but serialization failed.",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            ContentValues newValues = new ContentValues();
+            newValues.put(UserPlantsDBHelper.COL_USERNAME, username);
+            newValues.put(UserPlantsDBHelper.COL_PLANT_NAME, p.getName());
+            newValues.put(UserPlantsDBHelper.COL_PLANT, serialPlant);
+            db.update(
+                    UserPlantsDBHelper.TABLE_NAME,
+                    newValues,
+                    UserPlantsDBHelper.COL_USERNAME + "= ? AND " +
+                            UserPlantsDBHelper.COL_PLANT_NAME + "= ?",
+                    new String[]{username, p.getName()});
+        }
+    }
+
+    public void deleteEntry(String username, Plant p) {
+        db.delete(
+                UserPlantsDBHelper.TABLE_NAME,
+                UserPlantsDBHelper.COL_USERNAME + "= ? AND " +
+                        UserPlantsDBHelper.COL_PLANT_NAME + "= ?",
+                new String[]{username, p.getName()});
     }
 
     public int deleteUser(String username) {
@@ -61,11 +99,11 @@ public class FetchPlantData {
         return 1;
     }
 
-    public List<Plant> getPlants(String username) {
+    private List<Plant> getPlantsInternal(String username) {
         List<Plant> plants = new ArrayList<>();
         Cursor cursor = db.query(
-                UserPlantsDB.TABLE_NAME,
-                new String[]{UserPlantsDB.COL_PLANT},
+                UserPlantsDBHelper.TABLE_NAME,
+                new String[]{UserPlantsDBHelper.COL_PLANT},
                 " username=?",
                 new String[]{username},
                 null, null, null);
@@ -74,7 +112,7 @@ public class FetchPlantData {
         }
         try {
             while (cursor.moveToNext()) {
-                byte[] serialPlant = cursor.getBlob(cursor.getColumnIndex(UserPlantsDB.COL_PLANT));
+                byte[] serialPlant = cursor.getBlob(cursor.getColumnIndex(UserPlantsDBHelper.COL_PLANT));
                 Plant curr = Plant.deserializePlant(serialPlant);
                 if (curr != null) {
                     plants.add(curr);
@@ -87,4 +125,12 @@ public class FetchPlantData {
             } catch (Exception e) { /* do nothing */ }
         }
     }
+
+    public static List<Plant> getPlants(Context c, String username) {
+        FetchPlantData fpd = new FetchPlantData(c).open();
+        List<Plant> ret = fpd.getPlantsInternal(username);
+        fpd.close();
+        return ret;
+    }
+
 }

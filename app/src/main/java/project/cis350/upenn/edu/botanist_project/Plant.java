@@ -1,7 +1,5 @@
 package project.cis350.upenn.edu.botanist_project;
 
-import android.graphics.Bitmap;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -9,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by John on 2/16/17.
@@ -17,6 +16,8 @@ import java.util.Date;
  */
 
 public class Plant implements Serializable {
+    public static boolean PRETEND_DAYS_ARE_MINUTES = true;
+
     private String name;
     private String species;
     private int waterPeriodDays;
@@ -26,7 +27,7 @@ public class Plant implements Serializable {
     public Plant(String name, String species) {
         this.name = name;
         this.species = species;
-        this.waterPeriodDays = 7;
+        this.waterPeriodDays = PRETEND_DAYS_ARE_MINUTES ? 1 : 7;
         this.created = new Date();
         this.lastWatered = new Date();
     }
@@ -48,13 +49,37 @@ public class Plant implements Serializable {
     }
 
     public boolean needsWatering() {
-        Date waterBefore = new Date(lastWatered.getTime() + waterPeriodDays * 24 * 60 * 60 * 1000L);
+        Date waterBefore;
+        if (PRETEND_DAYS_ARE_MINUTES) {
+            waterBefore = new Date(lastWatered.getTime() + waterPeriodDays * 60 * 1000L);
+        } else {
+            waterBefore = new Date(lastWatered.getTime() + waterPeriodDays * 24 * 60 * 60 * 1000L);
+        }
         Date now = new Date();
         return waterBefore.compareTo(now) < 0;
     }
 
     public void water() {
         lastWatered = new Date();
+    }
+
+    public String lastWateredText() {
+        String needsWaterText = needsWatering() ? name + " needs to be watered! " : "";
+
+        long ago;  // hah, pun
+        if (PRETEND_DAYS_ARE_MINUTES) {
+            ago = TimeUnit.MINUTES.convert(
+                    System.currentTimeMillis() - getLastWatered().getTime(),
+                    TimeUnit.MILLISECONDS);
+        } else {
+            ago = TimeUnit.DAYS.convert(
+                    System.currentTimeMillis() - getLastWatered().getTime(),
+                    TimeUnit.MILLISECONDS);
+        }
+
+        String pluralDay = ago == 1 ? "day" : "days";
+
+        return String.format("%sLast watered %s %s ago.", needsWaterText, ago, pluralDay);
     }
 
     public String getName() {

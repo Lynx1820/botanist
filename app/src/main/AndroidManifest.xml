@@ -51,7 +51,11 @@
         <activity android:name=".PlantInfoActivity" />
         <activity
             android:name=".AddPlantActivity"
-            android:label="@string/title_activity_add_plant"></activity>
+            android:label="@string/title_activity_add_plant" />
+        <activity
+            android:name=".InteractiveUserPlantActivity"
+            android:label="@string/title_activity_interactive_user_plant"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

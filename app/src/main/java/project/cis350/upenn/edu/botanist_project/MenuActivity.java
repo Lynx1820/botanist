@@ -5,16 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
     public static String owner;
 
     public LoginDataBase loginAdapter;
-    public FetchPlantData plantAdapter;
 
     public static final int PlantButtonClickActivity_ID = 1;
     public static final int AboutButtonClickActivity_ID = 2;
@@ -28,8 +25,6 @@ public class MenuActivity extends AppCompatActivity {
 
         loginAdapter = new LoginDataBase(this);
         loginAdapter = loginAdapter.open();
-        plantAdapter = new FetchPlantData(getApplicationContext());
-        plantAdapter = plantAdapter.open();
 
         writeReminders();
     }
@@ -55,17 +50,17 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     String getReminders() {
+        List<Plant> userPlants = getUserPlants();
+
+        if (userPlants.isEmpty()) {
+            return "Add a plant to keep track of it!";
+        }
+
         StringBuilder sb = new StringBuilder();
-        for (Plant p : getUserPlants()) {
+        for (Plant p : userPlants) {
             if (p.needsWatering()) {
-                sb.append(p.getName());
-                sb.append("needs to be watered! ");
-                long ago = TimeUnit.DAYS.convert(
-                        System.currentTimeMillis() - p.getLastWatered().getTime(),
-                        TimeUnit.MILLISECONDS);
-                sb.append("Last watered ");
-                sb.append(ago);
-                sb.append(" days ago.\n");
+                sb.append(p.lastWateredText());
+                sb.append("\n");
             }
         }
         String res = sb.toString();
@@ -77,16 +72,14 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
-    //needs to be an ArrayList to be explicitly serializable
-    ArrayList<Plant> getUserPlants() {
-        Toast.makeText(this, "user is " + MenuActivity.owner, Toast.LENGTH_LONG).show();
-        return new ArrayList<>(plantAdapter.getPlants(MenuActivity.owner));
+    // TODO: this is pretty hacky. Can it be improved?
+    List<Plant> getUserPlants() {
+        return FetchPlantData.getPlants(getApplicationContext(), MenuActivity.owner);
     }
 
     // creates a plant activity
     public void onPlantButtonClick(View v) {
         Intent i = new Intent(this, PlantActivity.class);
-        i.putExtra("plant_list", getUserPlants());
         startActivityForResult(i, PlantButtonClickActivity_ID);
     }
 

@@ -21,4 +21,5 @@
     <string name="error_invalid_name">Name must be at least 3 characters</string>
     <string name="error_invalid_type">Invalid plant type</string>
     <string name="error_field_required">This field is required</string>
+    <string name="title_activity_interactive_user_plant">InteractiveUserPlantActivity</string>
 </resources>

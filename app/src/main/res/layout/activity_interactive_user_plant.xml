@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="project.cis350.upenn.edu.botanist_project.InteractiveUserPlantActivity">
+
+    <include layout="@layout/content_interactive_user_plant"
+        android:id="@+id/include" />
+
+    <LinearLayout
+        android:id="@+id/plantDetailsEntire"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/plantImagePlaceHolder"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_weight="0.03"
+            app:layout_anchor="@+id/include"
+            app:srcCompat="@drawable/pun_pending" />
+
+        <TextView
+            android:id="@+id/plantDescr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.21"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/plantReminders"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.28"
+            android:text="TextView"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/waterButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="179dp"
+            android:layout_height="61dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:onClick="onWaterPlantButtonClick"
+            android:layout_gravity="center_horizontal"
+            android:text="Water"
+            android:layout_weight="0.05" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_weight="0.37"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/deleteButton"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.12"
+                android:onClick="onPlantDeleteClick"
+                android:text="Delete plant" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
