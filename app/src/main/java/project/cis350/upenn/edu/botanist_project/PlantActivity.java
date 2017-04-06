@@ -1,18 +1,25 @@
 package project.cis350.upenn.edu.botanist_project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static project.cis350.upenn.edu.botanist_project.R.id.center;
+import static project.cis350.upenn.edu.botanist_project.R.id.center_horizontal;
+import static project.cis350.upenn.edu.botanist_project.R.id.left_column;
+import static project.cis350.upenn.edu.botanist_project.R.id.right_column;
 
 /**
  * The activity that allows a user to view their plants. Also connects to creation of new plants,
@@ -49,13 +56,38 @@ public class PlantActivity extends AppCompatActivity {
     }
 
     protected void displayCurrentPlants() {
-        GridLayout plant_grid = (GridLayout) findViewById(R.id.plant_grid);
-        plant_grid.removeAllViews();
+        LinearLayout left_col = (LinearLayout) findViewById(left_column);
+        LinearLayout right_col = (LinearLayout) findViewById(right_column);
+        left_col.removeAllViews();
+        right_col.removeAllViews();
         for (int i = 0; i < currentPlants.size(); i++) {
             Plant p = currentPlants.get(i);
             ImageView image = new ImageView(getApplicationContext());
             image.setImageResource(R.drawable.pun_pending);
-            plant_grid.addView(image, i);
+
+            TextView nameDisplay = new TextView(getApplicationContext());
+            nameDisplay.setText(p.getName());
+            nameDisplay.setGravity(center_horizontal);
+            nameDisplay.setTextColor(Color.BLACK);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            layoutParams.setMargins(0, 0, 0, 30);
+
+            LinearLayout plantLayout = new LinearLayout(getApplicationContext());
+            plantLayout.setOrientation(LinearLayout.VERTICAL);
+            plantLayout.setGravity(center);
+            plantLayout.addView(image);
+            plantLayout.addView(nameDisplay, layoutParams);
+
+
+            if (i % 2 == 0) {
+                left_col.addView(plantLayout, 0);
+            }
+            else {
+                right_col.addView(plantLayout, 0);
+            }
         }
     }
 
