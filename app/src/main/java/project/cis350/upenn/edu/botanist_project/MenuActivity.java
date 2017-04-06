@@ -5,28 +5,77 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
     public static String owner;
+
+    public LoginDataBase loginAdapter;
+    public FetchPlantData plantAdapter;
+
     public static final int PlantButtonClickActivity_ID = 1;
     public static final int AboutButtonClickActivity_ID = 2;
     public static final int LogoutButtonClickActivity_ID = 3;
     public static final int InfoButtonClickActivity_ID = 4;
-    // TODO: Create the plant object from database info?
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        loginAdapter = new LoginDataBase(this);
+        loginAdapter = loginAdapter.open();
+        plantAdapter = new FetchPlantData(getApplicationContext());
+        plantAdapter = plantAdapter.open();
+
+        writeReminders();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        writeReminders();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        writeReminders();
+    }
+
+    void writeReminders() {
         String myText = "Hello " + owner + "!";
         TextView myTextView= (TextView) findViewById(R.id.myTextView);
         myTextView.setText(myText);
-        myTextView= (TextView) findViewById(R.id.info_text);
-        myTextView.setText("No remainders yet!");
+        myTextView = (TextView) findViewById(R.id.info_text);
+        myTextView.setText(getReminders());
+    }
+
+    String getReminders() {
+        StringBuilder sb = new StringBuilder();
+        for (Plant p : getUserPlants()) {
+            sb.append("Name: ");
+            sb.append(p.getName());
+            sb.append(", type: ");
+            sb.append(p.getType());
+            sb.append("\n");
+        }
+        return sb.toString(); // TODO: actually have logic for needs watering
+    }
+
+    //needs to be an ArrayList to be explicitly serializable
+    ArrayList<Plant> getUserPlants() {
+        Toast.makeText(this, "user is " + MenuActivity.owner, Toast.LENGTH_LONG).show();
+        return new ArrayList<>(plantAdapter.getPlants(MenuActivity.owner));
     }
 
     // creates a plant activity
     public void onPlantButtonClick(View v) {
         Intent i = new Intent(this, PlantActivity.class);
+        i.putExtra("plant_list", getUserPlants());
         startActivityForResult(i, PlantButtonClickActivity_ID);
     }
 
@@ -42,6 +91,8 @@ public class MenuActivity extends AppCompatActivity {
 
     public void onLogoutButtonClick(View v) {
         Intent i = new Intent(this, MainActivity.class);
+        // deletes all previous activities so user can't just press back to re-login
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivityForResult(i, LogoutButtonClickActivity_ID);
         finish();
     }

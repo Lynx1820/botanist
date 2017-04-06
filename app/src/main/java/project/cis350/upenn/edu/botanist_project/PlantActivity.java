@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,19 +18,15 @@ import java.util.List;
 public class PlantActivity extends AppCompatActivity {
     public static final int ADDPLANT_ID = 1;
     private static List<Plant> currentPlants;
-    FetchPlantData plantAdapter;
-    LoginDataBase loginAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        loginAdapter = new LoginDataBase(this);
-        loginAdapter = loginAdapter.open();
-        plantAdapter = new FetchPlantData(this);
-        plantAdapter = plantAdapter.open();
-        addUsersPlants();
+
+        populateUsersPlants();
         displayCurrentPlants();
 
         Button addPlant = (Button) findViewById(R.id.add_plant);
@@ -41,11 +38,15 @@ public class PlantActivity extends AppCompatActivity {
             }
         });
     }
-    protected void addUsersPlants(){
-        currentPlants = plantAdapter.getPlants(MenuActivity.owner);
+
+    protected void populateUsersPlants() {
+        //noinspection unchecked
+        currentPlants = (ArrayList<Plant>) getIntent().getSerializableExtra("plant_list");
     }
+
     protected void displayCurrentPlants() {
         GridLayout plant_grid = (GridLayout) findViewById(R.id.plant_grid);
+        plant_grid.removeAllViews();
         for (int i = 0; i < currentPlants.size(); i++) {
             Plant p = currentPlants.get(i);
             ImageView image = new ImageView(getApplicationContext());
@@ -65,13 +66,14 @@ public class PlantActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if (data != null) {
-                boolean result = Boolean.parseBoolean(data.getStringExtra("result"));
-                String name = data.getStringExtra("plantName");
-                String type = data.getStringExtra("plantType");
+                boolean result = data.getBooleanExtra("result", false);
+                Plant p = (Plant) data.getSerializableExtra("createdPlant");
 
-                Plant p = new Plant(new Date(), name, type);
-                plantAdapter.insertEntry(MenuActivity.owner,1,0);
-                currentPlants.add(p);
+                if (p != null) {
+                    currentPlants.add(p); // add newly created plant to the grid
+                    Toast.makeText(this, "# of plants is" + currentPlants.size(), Toast.LENGTH_SHORT).show();
+                }
+
                 if (result) {
                     // this is a temporary message
                     View v = findViewById(android.R.id.content).getRootView();
