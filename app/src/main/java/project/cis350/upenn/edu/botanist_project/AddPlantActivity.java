@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +24,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -245,20 +247,17 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
      */
     public class PlantAddTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mType;
-        private final String mName;
+        private final Plant plant;
 
         PlantAddTask(String type, String name) {
-            mType = type;
-            mName = name;
+            plant = new Plant(name, type);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-
-            // TODO: add the new plant to database.
-
-            return true;
+            // add plant to database
+            FetchPlantData plantAdaptor = new FetchPlantData(getApplicationContext()).open();
+            return plantAdaptor.insertEntry(MenuActivity.owner, plant);
         }
 
         @Override
@@ -267,17 +266,10 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
             showProgress(false);
 
             Intent i = new Intent();
-            i.putExtra("result", success);
-            i.putExtra("plantName", mName);
-            i.putExtra("plantType", mType);
+            i.putExtra("result", success.booleanValue());
+            i.putExtra("createdPlant", plant);
             setResult(1, i);
             finish();
-//            if (success) {
-//
-//            } else {
-//                mPasswordView.setError(getString(R.string.error_incorrect_password));
-//                mPasswordView.requestFocus();
-//            }
         }
 
         @Override

@@ -2,7 +2,12 @@ package project.cis350.upenn.edu.botanist_project;
 
 import android.graphics.Bitmap;
 
-import java.util.ArrayList;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -11,44 +16,106 @@ import java.util.Date;
  * as subclasses
  */
 
-public class Plant {
-    private Date created;
+public class Plant implements Serializable {
     private String name;
-    private String type;
-    private ArrayList<Bitmap> photos;
-    private boolean hasPicture;
-    private int flowerID; //temporary var... eventually should be name
-    public Plant(Date created, String name, String type) {
-        this.created = created;
+    private String species;
+    private int waterPeriodDays;
+    private Date created;
+    private Date lastWatered;
+
+    public Plant(String name, String species) {
         this.name = name;
-        this.type = type;
-        photos = new ArrayList<>();
-        hasPicture = false;
-    }
-    //just temporary...we can talk about what a plant object needs in the future.
-    // Still need to integrate the plant database someother time...
-    public Plant(int flowerID){
-        this.flowerID = flowerID;
-    }
-    public void addPhoto(Bitmap photo) {
-        photos.add(photo);
-        if (!hasPicture) {
-            hasPicture = true;
-        }
+        this.species = species;
+        this.waterPeriodDays = 7;
+        this.created = new Date();
+        this.lastWatered = new Date();
     }
 
-    public String getType() {return type;}
+    public Plant(String name, String species, int waterPeriodDays) {
+        this.name = name;
+        this.species = species;
+        this.waterPeriodDays = waterPeriodDays;
+        this.created = new Date();
+        this.lastWatered = new Date();
+    }
 
-    public Date getCreated() {
-        return created;
+    public Plant(String name, String species, int waterPeriodDays, Date created, Date lastWatered) {
+        this.name = name;
+        this.species = species;
+        this.waterPeriodDays = waterPeriodDays;
+        this.created = created;
+        this.lastWatered = lastWatered;
+    }
+
+    public boolean needsWatering() {
+        Date waterBefore = new Date(lastWatered.getTime() + waterPeriodDays * 24 * 60 * 60 * 1000L);
+        Date now = new Date();
+        return waterBefore.compareTo(now) < 0;
+    }
+
+    public void water() {
+        lastWatered = new Date();
     }
 
     public String getName() {
         return name;
     }
+    public String getType() {
+        return species;
+    }
+    public Date getCreated() {
+        return created;
+    }
+    public Date getLastWatered() {
+        return lastWatered;
+    }
+    public int getWaterPeriodDays() {
+        return waterPeriodDays;
+    }
 
-    public boolean hasPicture() {
-        return hasPicture;
+    public static byte[] serializePlant(Plant p) {
+        ByteArrayOutputStream b = null;
+        ObjectOutputStream o = null;
+        try {
+            b = new ByteArrayOutputStream();
+            o = new ObjectOutputStream(b);
+            o.writeObject(p);
+            return b.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (o != null) {
+                    o.close();
+                }
+                if (b != null) {
+                    b.close();
+                }
+            } catch (Exception e) { /* do nothing */ }
+        }
+    }
+
+    public static Plant deserializePlant(byte[] pInfo) {
+        ByteArrayInputStream b = null;
+        ObjectInputStream o = null;
+        try {
+            b = new ByteArrayInputStream(pInfo);
+            o = new ObjectInputStream(b);
+            return (Plant) o.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            try {
+                if (o != null) {
+                    o.close();
+                }
+                if (b != null) {
+                    b.close();
+                }
+            } catch (Exception e) { /* do nothing*/ }
+        }
     }
 
 }

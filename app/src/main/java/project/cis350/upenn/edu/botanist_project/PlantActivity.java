@@ -1,36 +1,43 @@
 package project.cis350.upenn.edu.botanist_project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import static project.cis350.upenn.edu.botanist_project.R.id.center;
+import static project.cis350.upenn.edu.botanist_project.R.id.center_horizontal;
+import static project.cis350.upenn.edu.botanist_project.R.id.left_column;
+import static project.cis350.upenn.edu.botanist_project.R.id.right_column;
+
+/**
+ * The activity that allows a user to view their plants. Also connects to creation of new plants,
+ * AddPlantActivity, and more detailed information of *user* plants (not to be confused with
+ * PlantInfo, which is general).
+ */
 public class PlantActivity extends AppCompatActivity {
     public static final int ADDPLANT_ID = 1;
     private static List<Plant> currentPlants;
-    FetchPlantData plantAdapter;
-    LoginDataBase loginAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        loginAdapter = new LoginDataBase(this);
-        loginAdapter = loginAdapter.open();
-        plantAdapter = new FetchPlantData(this);
-        plantAdapter = plantAdapter.open();
-        addUsersPlants();
+
+        populateUsersPlants();
         displayCurrentPlants();
 
         Button addPlant = (Button) findViewById(R.id.add_plant);
@@ -42,17 +49,45 @@ public class PlantActivity extends AppCompatActivity {
             }
         });
     }
-    protected void addUsersPlants(){
-        currentPlants = plantAdapter.getPlants(MenuActivity.owner);
+
+    protected void populateUsersPlants() {
+        //noinspection unchecked
+        currentPlants = (ArrayList<Plant>) getIntent().getSerializableExtra("plant_list");
     }
+
     protected void displayCurrentPlants() {
-        GridLayout plant_grid = (GridLayout) findViewById(R.id.plant_grid);
+        LinearLayout left_col = (LinearLayout) findViewById(left_column);
+        LinearLayout right_col = (LinearLayout) findViewById(right_column);
+        left_col.removeAllViews();
+        right_col.removeAllViews();
         for (int i = 0; i < currentPlants.size(); i++) {
             Plant p = currentPlants.get(i);
             ImageView image = new ImageView(getApplicationContext());
             image.setImageResource(R.drawable.pun_pending);
-            plant_grid.addView(image, i);
-            Toast.makeText(PlantActivity.this, currentPlants.get(0).getName() , Toast.LENGTH_LONG).show();
+
+            TextView nameDisplay = new TextView(getApplicationContext());
+            nameDisplay.setText(p.getName());
+            nameDisplay.setGravity(center_horizontal);
+            nameDisplay.setTextColor(Color.BLACK);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            layoutParams.setMargins(0, 0, 0, 30);
+
+            LinearLayout plantLayout = new LinearLayout(getApplicationContext());
+            plantLayout.setOrientation(LinearLayout.VERTICAL);
+            plantLayout.setGravity(center);
+            plantLayout.addView(image);
+            plantLayout.addView(nameDisplay, layoutParams);
+
+
+            if (i % 2 == 0) {
+                left_col.addView(plantLayout, 0);
+            }
+            else {
+                right_col.addView(plantLayout, 0);
+            }
         }
     }
 
@@ -67,13 +102,14 @@ public class PlantActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if (data != null) {
-                boolean result = Boolean.parseBoolean(data.getStringExtra("result"));
-                String name = data.getStringExtra("plantName");
-                String type = data.getStringExtra("plantType");
+                boolean result = data.getBooleanExtra("result", false);
+                Plant p = (Plant) data.getSerializableExtra("createdPlant");
 
-                Plant p = new Plant(new Date(), name, type);
-                plantAdapter.insertEntry(MenuActivity.owner,1,0);
-                currentPlants.add(p);
+                if (p != null) {
+                    currentPlants.add(p); // add newly created plant to the grid
+                    Toast.makeText(this, "# of plants is" + currentPlants.size(), Toast.LENGTH_SHORT).show();
+                }
+
                 if (result) {
                     // this is a temporary message
                     View v = findViewById(android.R.id.content).getRootView();
