@@ -22,6 +22,7 @@
                 android:layout_width="101dp"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
+                android:visibility="invisible"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 android:layout_weight="0.27" />
 
@@ -29,7 +30,8 @@
                 android:text="My Plants"
                 android:layout_width="wrap_content"
                 android:layout_height="44dp"
-                android:id="@+id/my_plants" />
+                android:id="@+id/my_plants"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium" />
 
             <Space
                 android:layout_width="wrap_content"
@@ -48,12 +50,5 @@
 
     <include layout="@layout/content_plant" />
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="506dp"
-        android:id="@+id/plant_grid"
-        android:layout_gravity="bottom">
-
-    </GridLayout>
 
 </android.support.design.widget.CoordinatorLayout>

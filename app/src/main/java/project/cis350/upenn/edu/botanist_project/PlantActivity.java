@@ -1,15 +1,14 @@
 package project.cis350.upenn.edu.botanist_project;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,48 +48,48 @@ public class PlantActivity extends AppCompatActivity {
     }
 
     protected void displayCurrentPlants() {
-        GridLayout plant_grid = (GridLayout) findViewById(R.id.plant_grid);
-        plant_grid.removeAllViews(); // clear previous plants in case a new one has been created
+        LinearLayout left_col = (LinearLayout) findViewById(R.id.left_column);
+        LinearLayout right_col = (LinearLayout) findViewById(R.id.right_column);
+        // clear previous plants in case a new one has been created
+        left_col.removeAllViews();
+        right_col.removeAllViews();
 
-        // Dimensions of grid
-        int n = currentPlants.size();
-        int cols = 2;
-        int rows = (n + 1) / cols;
-        plant_grid.setColumnCount(cols);
-        plant_grid.setRowCount(rows);
-
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < currentPlants.size(); i++) {
             final Plant p = currentPlants.get(i);
 
             // ImageView for the plant picture
             ImageView image = new ImageView(this);
-            image.setId(i + 1);  // ids must be > 0, so we add 1
             image.setImageResource(R.drawable.pun_pending);
-
-            // TextView for the plant name
-            TextView name = new TextView(this);
-            name.setText(p.getName());
-            name.setGravity(Gravity.CENTER);
-
-            // Put ImageView on top of TextView
-            RelativeLayout stacked = new RelativeLayout(this);
-            RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT);
-            params2.addRule(RelativeLayout.BELOW, image.getId());
-            stacked.addView(image);
-            stacked.addView(name, params2);
-            stacked.setGravity(Gravity.CENTER);  // TODO: figure out how to center text. this isn't working
-
-            // Each box in the grid is clickable to open up the plant details
-            stacked.setOnClickListener(new View.OnClickListener() {
+            // make image clickable for plant details
+            image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openPlantDetails(p);
                 }
             });
 
-            plant_grid.addView(stacked);
+            // TextView for the plant name
+            TextView nameDisplay = new TextView(this);
+            nameDisplay.setText(p.getName());
+            nameDisplay.setGravity(R.id.center_horizontal);
+            nameDisplay.setTextColor(Color.BLACK);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+            layoutParams.setMargins(0, 0, 0, 30);
+            LinearLayout plantLayout = new LinearLayout(getApplicationContext());
+            plantLayout.setOrientation(LinearLayout.VERTICAL);
+            plantLayout.setGravity(R.id.center);
+            plantLayout.addView(image);
+            plantLayout.addView(nameDisplay, layoutParams);
+
+            if (i % 2 == 0) {
+                left_col.addView(plantLayout, 0);
+            }
+            else {
+                right_col.addView(plantLayout, 0);
+            }
         }
     }
 
