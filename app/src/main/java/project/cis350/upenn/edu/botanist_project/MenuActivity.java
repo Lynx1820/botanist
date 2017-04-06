@@ -1,14 +1,14 @@
 package project.cis350.upenn.edu.botanist_project;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MenuActivity extends AppCompatActivity {
     public static String owner;
@@ -57,13 +57,24 @@ public class MenuActivity extends AppCompatActivity {
     String getReminders() {
         StringBuilder sb = new StringBuilder();
         for (Plant p : getUserPlants()) {
-            sb.append("Name: ");
-            sb.append(p.getName());
-            sb.append(", type: ");
-            sb.append(p.getType());
-            sb.append("\n");
+            if (p.needsWatering()) {
+                sb.append(p.getName());
+                sb.append("needs to be watered! ");
+                long ago = TimeUnit.DAYS.convert(
+                        System.currentTimeMillis() - p.getLastWatered().getTime(),
+                        TimeUnit.MILLISECONDS);
+                sb.append("Last watered ");
+                sb.append(ago);
+                sb.append(" days ago.\n");
+            }
         }
-        return sb.toString(); // TODO: actually have logic for needs watering
+        String res = sb.toString();
+        if (res.equals("")) {
+            return "No reminders. Good job taking care of your plants!";
+        }
+        else {
+            return res;
+        }
     }
 
     //needs to be an ArrayList to be explicitly serializable
