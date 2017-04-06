@@ -114,15 +114,15 @@ public class PlantActivity extends AppCompatActivity {
                 boolean result = data.getBooleanExtra("result", false);
                 Plant p = (Plant) data.getSerializableExtra("createdPlant");
 
-                if (p != null) {
+                if (result && p != null) {
                     currentPlants.add(p); // add newly created plant to the grid
-                }
-
-                if (result) {
                     Toast.makeText(this, "Added plant successfully!", Toast.LENGTH_SHORT).show();
+                    displayCurrentPlants();
+                }
+                else {
+                    Toast.makeText(this, "Unable to add plant.", Toast.LENGTH_SHORT).show();
                 }
             }
         }
-        displayCurrentPlants();
     }
 }
