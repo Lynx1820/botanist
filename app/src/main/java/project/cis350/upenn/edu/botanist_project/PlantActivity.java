@@ -43,6 +43,26 @@ public class PlantActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        LinearLayout left_col = (LinearLayout) findViewById(R.id.left_column);
+        LinearLayout right_col = (LinearLayout) findViewById(R.id.right_column);
+        left_col.invalidate();
+        right_col.invalidate();
+        displayCurrentPlants();
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        LinearLayout left_col = (LinearLayout) findViewById(R.id.left_column);
+        LinearLayout right_col = (LinearLayout) findViewById(R.id.right_column);
+        left_col.invalidate();
+        right_col.invalidate();
+        displayCurrentPlants();
+    }
+
     protected void populateUsersPlants() {
         currentPlants = FetchPlantData.getPlants(getApplicationContext(), MenuActivity.owner);
     }
