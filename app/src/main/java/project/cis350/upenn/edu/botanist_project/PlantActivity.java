@@ -59,7 +59,11 @@ public class PlantActivity extends AppCompatActivity {
 
             // ImageView for the plant picture
             ImageView image = new ImageView(this);
-            image.setImageResource(R.drawable.pun_pending);
+            if (p.needsWatering()) {
+                image.setImageResource(R.drawable.wiltedplant);
+            } else {
+                image.setImageResource(R.drawable.pun_pending);
+            }
             // make image clickable for plant details
             image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,7 +75,7 @@ public class PlantActivity extends AppCompatActivity {
             // TextView for the plant name
             TextView nameDisplay = new TextView(this);
             nameDisplay.setText(p.getName());
-            nameDisplay.setGravity(R.id.center_horizontal);
+            nameDisplay.setGravity(R.id.center_horizontal); // TODO centering isn't working
             nameDisplay.setTextColor(Color.BLACK);
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(

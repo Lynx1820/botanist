@@ -60,7 +60,7 @@ public class MenuActivity extends AppCompatActivity {
         for (Plant p : userPlants) {
             if (p.needsWatering()) {
                 sb.append(p.lastWateredText());
-                sb.append("\n");
+                sb.append("\n\n");
             }
         }
         String res = sb.toString();
