@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,8 +23,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ import java.util.List;
 public class AddPlantActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
-     * Keep track of the login task to ensure we can cancel it if requested.
+     * Keep track of the creation task to ensure we can cancel it if requested.
      */
     private PlantAddTask mAuthTask = null;
 
@@ -44,12 +43,14 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
     private EditText nameView;
     private View mProgressView;
     private View mEntryFormView;
+    private List<String> species = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Going into add plant");
         setContentView(R.layout.activity_add_plant);
-        // Set up the login form.
+        // Set up the creation form.
         typeView = (AutoCompleteTextView) findViewById(R.id.plant_type);
         populateAutoComplete();
 
@@ -57,11 +58,6 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
         nameView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-//                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-//                    attemptEntry();
-//                    return true;
-//                }
-//                return false;
                 attemptEntry();
                 return true;
             }
@@ -80,14 +76,24 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
     }
 
     private void populateAutoComplete() {
-        // TODO: Scan through plant types to autocomplete
+        try {
+            List<PlantInfo> info = PlantInfo.readInfoFromJson(getAssets().open("plant_info.json"));
+            for (PlantInfo pi : info) {
+                species.add(pi.name);
+            }
+        } catch(IOException e) {
+            e.printStackTrace();
+            finish();
+        }
+//        getLoaderManager().initLoader(0, null, this);
+        addTypesToAutoComplete(species);
     }
 
 
     /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
+     * Attempts to create the plant specified by the form.
+     * If there are form errors (invalid species, missing fields, etc.), the
+     * errors are presented and no actual creation attempt is made.
      */
     private void attemptEntry() {
         if (mAuthTask != null) {
@@ -142,12 +148,16 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
     }
 
     private boolean isTypeValid(String type) {
-        //TODO: Check if it's one of the types
-        return type.length() > 2;
+        for (String n : species) {
+            if (type.equals(n)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isNameValid(String name) {
-        //TODO: Check if name is already used
+        //TODO: Check in database name is already used
         return name.length() > 2;
     }
 
@@ -209,11 +219,12 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
         List<String> types = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            types.add(cursor.getString(ProfileQuery.ADDRESS));
+            // TODO: __
+//            types.add(cursor.getString());
             cursor.moveToNext();
         }
-
-        addTypesToAutoComplete(types);
+        System.out.println("In the right place");
+        addTypesToAutoComplete(species);
     }
 
     @Override
@@ -221,12 +232,12 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
         // TODO: complete
     }
 
-    private void addTypesToAutoComplete(List<String> typeCollection) {
+    private void addTypesToAutoComplete(List<String> types) {
         //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(AddPlantActivity.this,
-                        android.R.layout.simple_dropdown_item_1line, typeCollection);
-
+                        android.R.layout.simple_dropdown_item_1line, types);
+        adapter.setNotifyOnChange(true);
         typeView.setAdapter(adapter);
     }
 
@@ -242,8 +253,8 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Represents an asynchronous creation task used to authenticate
+     * the plant.
      */
     public class PlantAddTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -256,8 +267,9 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
         @Override
         protected Boolean doInBackground(Void... params) {
             // add plant to database
-            FetchPlantData plantAdaptor = new FetchPlantData(getApplicationContext()).open();
-            return plantAdaptor.insertEntry(MenuActivity.owner, plant);
+//            FetchPlantData plantAdaptor = new FetchPlantData(getApplicationContext()).open();
+//            return plantAdaptor.insertEntry(MenuActivity.owner, plant);
+            return true;
         }
 
         @Override
