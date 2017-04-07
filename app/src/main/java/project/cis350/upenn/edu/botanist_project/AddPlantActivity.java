@@ -48,7 +48,6 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Going into add plant");
         setContentView(R.layout.activity_add_plant);
         // Set up the creation form.
         typeView = (AutoCompleteTextView) findViewById(R.id.plant_type);
@@ -223,7 +222,6 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
 //            types.add(cursor.getString());
             cursor.moveToNext();
         }
-        System.out.println("In the right place");
         addTypesToAutoComplete(species);
     }
 
@@ -267,9 +265,8 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
         @Override
         protected Boolean doInBackground(Void... params) {
             // add plant to database
-//            FetchPlantData plantAdaptor = new FetchPlantData(getApplicationContext()).open();
-//            return plantAdaptor.insertEntry(MenuActivity.owner, plant);
-            return true;
+            FetchPlantData plantAdaptor = new FetchPlantData(getApplicationContext()).open();
+            return plantAdaptor.insertEntry(MenuActivity.owner, plant);
         }
 
         @Override
