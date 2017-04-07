@@ -120,6 +120,10 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
             nameView.setError(getString(R.string.error_invalid_name));
             focusView = nameView;
             cancel = true;
+        } else if (!isNameUnique(name)) {
+            nameView.setError(getString(R.string.error_name_used));
+            focusView = nameView;
+            cancel = true;
         }
 
         // Check for a valid type.
@@ -156,8 +160,17 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
     }
 
     private boolean isNameValid(String name) {
-        //TODO: Check in database name is already used
         return name.length() > 2;
+    }
+
+    private boolean isNameUnique(String name) {
+        List<Plant> plants = FetchPlantData.getPlants(getApplicationContext(), MenuActivity.owner);
+        for (Plant p : plants) {
+            if (p.getName().equals(name)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
