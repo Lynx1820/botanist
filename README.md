@@ -1,7 +1,5 @@
-# 350S17-27-Botanist
-TODO:
-- add plant names(age? ) under plant icons
-- fix the adding plant bug
-- integrate plant database (right now I have database with user specific info but we will also need one for plant specific info that all users can reference)
+# The Botanist App
+### Getting Started:
+This app helps you take care of your houseplants. Sign up for an account and add the various houseplants you want to track! Browse through the informational section for care tips and frequently asked questions about a particular plant species.
 
-feel free to add anything else!!!
+Reminders to water your plant are displayed on the main page. Once you've watered the plant, go into the app and mark it as watered, and the app will send you a reminder once it's time to water again.
