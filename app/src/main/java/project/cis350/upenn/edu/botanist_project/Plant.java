@@ -64,7 +64,7 @@ public class Plant implements Serializable {
     }
 
     public String lastWateredText() {
-        String needsWaterText = needsWatering() ? name + " needs to be watered! " : "";
+        String needsWaterText = needsWatering() ? name + " needs to be watered!\n" : "";
 
         long ago;  // hah, pun
         if (PRETEND_DAYS_ARE_MINUTES) {

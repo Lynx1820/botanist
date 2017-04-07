@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -95,7 +96,7 @@ public class PlantActivity extends AppCompatActivity {
             // TextView for the plant name
             TextView nameDisplay = new TextView(this);
             nameDisplay.setText(p.getName());
-            nameDisplay.setGravity(R.id.center_horizontal); // TODO centering isn't working
+            nameDisplay.setGravity(Gravity.CENTER);
             nameDisplay.setTextColor(Color.BLACK);
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(

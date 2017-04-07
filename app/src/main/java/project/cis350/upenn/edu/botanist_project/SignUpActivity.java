@@ -12,10 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 /**
  * Created by lynx313 on 2/15/17.
  */
-/*TODO: Ensure that the passwirds are equal*/
+
 public class SignUpActivity extends AppCompatActivity {
     EditText editUserName,editPassword,editConfirmPassword;
     Button createAccount;
@@ -37,9 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
         createAccount = (Button) findViewById(R.id.createAccount);
         createAccount.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                insertUserData(editUserName.getText().toString(), editPassword.getText().toString());
-                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivityForResult(myIntent, 0);
+                insertUserData(editUserName.getText().toString(), editPassword.getText().toString(),
+                        editConfirmPassword.getText().toString());
             }
         });
 
@@ -52,13 +53,28 @@ public class SignUpActivity extends AppCompatActivity {
         startActivityForResult(myIntent, 0);
         return true;
     }
-    //Inserting Data into database
-    public void insertUserData(String username, String password ) {
 
-        ContentValues values = new ContentValues();
-        values.put(DataBaseHelper.COLUMN_USERNAME,username);
-        values.put(DataBaseHelper.COLUMN_PASSWORD,password);
-        long id = db.insert(DataBaseHelper.TABLE_NAME,null,values);
+    // Given the entered fields, see if we can create a new user
+    public void insertUserData(String username, String password, String confirmPassword) {
+
+        Cursor cursor = db.query(DataBaseHelper.TABLE_NAME, null,
+                DataBaseHelper.COLUMN_USERNAME + " =?", new String[]{username}, null, null, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            Toast.makeText(this, "Username already taken.", Toast.LENGTH_SHORT).show();
+        } else if (!password.equals(confirmPassword)) {
+            cursor.close();
+            Toast.makeText(this, "Password fields do not match.", Toast.LENGTH_SHORT).show();
+        } else {
+            cursor.close();
+            ContentValues values = new ContentValues();
+            values.put(DataBaseHelper.COLUMN_USERNAME, username);
+            values.put(DataBaseHelper.COLUMN_PASSWORD, password);
+            long id = db.insert(DataBaseHelper.TABLE_NAME, null, values);
+            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivityForResult(myIntent, 0);
+        }
 
     }
 }

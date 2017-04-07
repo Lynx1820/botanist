@@ -160,7 +160,7 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
     }
 
     private boolean isNameValid(String name) {
-        return name.length() > 2;
+        return name.length() > 2 && name.length() < 17;
     }
 
     private boolean isNameUnique(String name) {

@@ -18,7 +18,7 @@
     <string name="action_add_plant">Add Plant</string>
     <string name="action_add_short">Add</string>
     <string name="error_name_used">You already have a plant with this name</string>
-    <string name="error_invalid_name">Name must be at least 3 characters</string>
+    <string name="error_invalid_name">Name must be between 3 and 16 characters</string>
     <string name="error_invalid_type">Invalid plant type</string>
     <string name="error_field_required">This field is required</string>
     <string name="title_activity_interactive_user_plant">InteractiveUserPlantActivity</string>
