@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">botanist_project</string>
+    <string name="app_name">Plant Manager</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_plant">PlantActivity</string>
     <string name="title_activity_about">AboutActivity</string>
