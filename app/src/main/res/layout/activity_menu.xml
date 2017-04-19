@@ -12,6 +12,7 @@
     tools:context="project.cis350.upenn.edu.botanist_project.MenuActivity"
     android:weightSum="1"
     android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/myTextView"
         android:scaleType="fitCenter"
@@ -87,6 +88,7 @@
             android:background="@android:color/transparent"
             android:onClick="onLogoutButtonClick"
             app:srcCompat="@drawable/door" />
+
     </LinearLayout>
 
 </LinearLayout>

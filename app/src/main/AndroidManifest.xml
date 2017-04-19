@@ -39,7 +39,7 @@
         <activity
             android:name=".MenuActivity"
             android:label="Main Menu"
-            android:theme="@style/AppTheme.NoActionBar" />
+            />
         <activity
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
@@ -55,7 +55,7 @@
         <activity
             android:name=".InteractiveUserPlantActivity"
             android:label="@string/title_activity_interactive_user_plant"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

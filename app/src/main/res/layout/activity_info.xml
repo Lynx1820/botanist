@@ -1,22 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="project.cis350.upenn.edu.botanist_project.InfoActivity">
 
-    <ListView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:id="@+id/infoList" />
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="0.09"
+                android:gravity="center"
+                android:text="Plant Info by Species"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <ListView
+            android:id="@+id/infoList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_conversion_absoluteHeight="535dp"
+            tools:layout_conversion_absoluteWidth="352dp"
+            tools:layout_conversion_absoluteX="16dp"
+            tools:layout_conversion_absoluteY="16dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
