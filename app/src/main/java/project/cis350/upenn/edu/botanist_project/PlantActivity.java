@@ -76,7 +76,9 @@ public class PlantActivity extends AppCompatActivity {
         right_col.removeAllViews();
 
         for (int i = 0; i < currentPlants.size(); i++) {
-            final Plant p = currentPlants.get(i);
+            // list is oldest to newest, but we add them from newest to oldest
+            // so we start from the end of the list
+            final Plant p = currentPlants.get(currentPlants.size()-i-1);
 
             // ImageView for the plant picture
             ImageView image = new ImageView(this);
@@ -110,10 +112,10 @@ public class PlantActivity extends AppCompatActivity {
             plantLayout.addView(nameDisplay, layoutParams);
 
             if (i % 2 == 0) {
-                left_col.addView(plantLayout, 0);
+                left_col.addView(plantLayout);
             }
             else {
-                right_col.addView(plantLayout, 0);
+                right_col.addView(plantLayout);
             }
         }
     }

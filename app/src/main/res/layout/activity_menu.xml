@@ -53,41 +53,105 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/plantButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/plant_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:onClick="onPlantButtonClick"
-            app:srcCompat="@drawable/pun_pending" />
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/infoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:onClick="onInfoButtonClick"
-            app:srcCompat="@drawable/buk" />
+            <ImageButton
+                android:id="@+id/plantButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="onPlantButtonClick"
+                app:srcCompat="@drawable/pun_pending" />
 
-        <ImageButton
-            android:id="@+id/aboutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:onClick="onAboutButtonClick"
-            app:srcCompat="@drawable/question_mark" />
+            <TextView
+                android:id="@+id/plantLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="My Plants" />
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/logoutButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:id="@+id/info_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:onClick="onLogoutButtonClick"
-            app:srcCompat="@drawable/door" />
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/infoButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="onInfoButtonClick"
+                app:srcCompat="@drawable/buk" />
+
+            <TextView
+                android:id="@+id/info_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Species Info" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/about_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/aboutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="onAboutButtonClick"
+                app:srcCompat="@drawable/question_mark" />
+
+            <TextView
+                android:id="@+id/about_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="About" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/logout_section"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/logoutButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:onClick="onLogoutButtonClick"
+                app:srcCompat="@drawable/door" />
+
+            <TextView
+                android:id="@+id/logout_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Logout" />
+        </LinearLayout>
 
     </LinearLayout>
 
