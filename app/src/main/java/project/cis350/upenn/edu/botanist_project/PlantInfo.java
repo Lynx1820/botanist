@@ -63,13 +63,13 @@ public class PlantInfo implements Parcelable{
     public String toString() {
         StringBuilder ans = new StringBuilder();
         ans.append(name + "\n \n");
-        ans.append("Fertilizer: " + fertilizer + "\n \n");
-        ans.append("Humidity: " + humidity + "\n \n");
-        ans.append("Light: " + light + "\n \n");
-        ans.append("Pot Size: " + potSize + "\n \n");
-        ans.append("Soil: " + soil + "\n \n");
-        ans.append("Temperature: " + temperature + "\n \n");
-        ans.append("Water: " + water);
+        if (fertilizer != null) ans.append("Fertilizer: " + fertilizer + "\n \n");
+        if (humidity != null) ans.append("Humidity: " + humidity + "\n \n");
+        if (light != null) ans.append("Light: " + light + "\n \n");
+        if (potSize != null) ans.append("Pot Size: " + potSize + "\n \n");
+        if (soil != null) ans.append("Soil: " + soil + "\n \n");
+        if (temperature != null) ans.append("Temperature: " + temperature + "\n \n");
+        if (water != null) ans.append("Water: " + water);
         return ans.toString();
     }
 
