@@ -24,12 +24,9 @@ public class SignUpActivity extends AppCompatActivity {
     ActionBar actionBar;
     SQLiteOpenHelper openHelper;
     SQLiteDatabase db;
-    //LoginDataBase loginDataBase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //loginDataBase=new LoginDataBase(this);
-        //loginDataBase =loginDataBase.open();
         openHelper = new DataBaseHelper(this);
         db = openHelper.getWritableDatabase();
         setContentView(R.layout.sign_up);

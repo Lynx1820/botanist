@@ -10,15 +10,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:orientation="vertical"
-        android:gravity="center_vertical" >
+        android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="195dp"
+            android:layout_weight="0.12"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/plant" />
 
         <EditText
             android:id="@+id/logInUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="User Name"
-            android:ems="10" >
+            android:ems="10"
+            android:hint="User Name">
+
             <requestFocus />
         </EditText>
 
@@ -27,8 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPassword"
-            android:hint="Password" />
+            android:hint="Password"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/buttonLogIn"
