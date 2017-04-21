@@ -84,7 +84,6 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
             e.printStackTrace();
             finish();
         }
-//        getLoaderManager().initLoader(0, null, this);
         addTypesToAutoComplete(species);
     }
 
@@ -109,7 +108,6 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
 
         boolean cancel = false;
         View focusView = null;
-        View addokafocusView = null;
 
         // Check if the User entered a name.
         if (TextUtils.isEmpty(name)) {
@@ -228,11 +226,9 @@ public class AddPlantActivity extends AppCompatActivity implements LoaderCallbac
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> types = new ArrayList<>();
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             // TODO: __
-//            types.add(cursor.getString());
             cursor.moveToNext();
         }
         addTypesToAutoComplete(species);

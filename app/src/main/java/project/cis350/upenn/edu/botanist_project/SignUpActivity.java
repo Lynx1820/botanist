@@ -68,7 +68,6 @@ public class SignUpActivity extends AppCompatActivity {
             ContentValues values = new ContentValues();
             values.put(DataBaseHelper.COLUMN_USERNAME, username);
             values.put(DataBaseHelper.COLUMN_PASSWORD, password);
-            long id = db.insert(DataBaseHelper.TABLE_NAME, null, values);
             Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
             startActivityForResult(myIntent, 0);
         }
