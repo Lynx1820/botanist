@@ -94,6 +94,10 @@ public class FetchPlantData {
                 new String[]{username, p.getName()});
     }
 
+    public int deleteUser(String username) {
+        // String where=
+        return 1;
+    }
 
     private List<Plant> getPlantsInternal(String username) {
         List<Plant> plants = new ArrayList<>();

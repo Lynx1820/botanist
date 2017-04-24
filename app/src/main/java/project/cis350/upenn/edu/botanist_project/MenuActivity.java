@@ -11,6 +11,8 @@ import java.util.List;
 public class MenuActivity extends AppCompatActivity {
     public static String owner;
 
+    public LoginDataBase loginAdapter;
+
     public static final int PlantButtonClickActivity_ID = 1;
     public static final int AboutButtonClickActivity_ID = 2;
     public static final int LogoutButtonClickActivity_ID = 3;
@@ -21,6 +23,8 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        loginAdapter = new LoginDataBase(this);
+        loginAdapter = loginAdapter.open();
 
         writeReminders();
     }
@@ -68,6 +72,7 @@ public class MenuActivity extends AppCompatActivity {
         }
     }
 
+    // TODO: this is pretty hacky. Can it be improved?
     List<Plant> getUserPlants() {
         return FetchPlantData.getPlants(getApplicationContext(), MenuActivity.owner);
     }

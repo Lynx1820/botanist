@@ -88,8 +88,14 @@ public class Plant implements Serializable {
     public String getType() {
         return species;
     }
+    public Date getCreated() {
+        return created;
+    }
     public Date getLastWatered() {
         return lastWatered;
+    }
+    public int getWaterPeriodDays() {
+        return waterPeriodDays;
     }
 
     public static byte[] serializePlant(Plant p) {
